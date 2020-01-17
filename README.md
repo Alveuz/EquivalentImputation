@@ -1,2 +1,2 @@
-# EmoRecogFromPic
-Emotional Recognition from Pictures using Machine Learning
+# Equivalent Imputation Algorithm
+Equivalent Imputation Algorithm based on Equivalence Hypothesis Tests
