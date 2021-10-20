@@ -10,7 +10,7 @@ output:
     number_sections: true
     df_print: paged
     # theme: journal
-    highlight: textmate
+    # highlight: textmate
     keep_md: true
     # css: journal.css
 ---
