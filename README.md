@@ -1,20 +1,19 @@
-# Equivalent Imputation Algorithm
-Equivalent Imputation Algorithm based on Equivalence Hypothesis Tests
+# Equivalent Imputation Models for Handling Missing Data in Compositional Geochemical Databases of Geothermal Fluids
 
 This exercise corresponds to a paper where we are analyzing compositional geothermal fluid data from different geothermal boreholes/wells. The purpose is to impute missing data in the whole dataset so it can be used to multiple purposes such as predicting the bottom-hole temperature of a geothermal resource.
 
 The content of the experimentation is as follows:
 
-    1.1 Introducci髇 a la Ciencia de Datos.
+    1.1 Introducci贸n a la Ciencia de Datos.
     1.2 Intro al PP.
-      1.2.1. Exploraci髇 Visual de Datos.
-    1.3 Regresi髇 Lineal Simple y M鷏tiple.
-      1.3.1.Pre-procesamiento: Normalizaci髇, Escalamiento, Transformaci髇 Logar韙mica.
-      1.3.2. Sel. Variables: Correlaci髇 y Mapas de Calor.
-      1.3.3. Evaluaci髇: Error Cuadr醫ico Promedio, R^2.
-    1.4 Clasificaci髇: Regresi髇 Log韘tica, K-Vecinos Cercanos, 羠boles de Decisi髇.
+      1.2.1. Exploraci贸n Visual de Datos.
+    1.3 Regresi贸n Lineal Simple y M煤ltiple.
+      1.3.1.Pre-procesamiento: Normalizaci贸n, Escalamiento, Transformaci贸n Logar铆tmica.
+      1.3.2. Sel. Variables: Correlaci贸n y Mapas de Calor.
+      1.3.3. Evaluaci贸n: Error Cuadr谩tico Promedio, R^2.
+    1.4 Clasificaci贸n: Regresi贸n Log铆stica, K-Vecinos Cercanos, 脕rboles de Decisi贸n.
       1.4.1. Sel. Variables: Information Value.
-      1.4.2. Evaluaci髇: Matriz de Confusi髇 y curvas ROC.
-    1.5 M醧uinas de Vectores de Soporte.
-    1.6 Concurso Titanic
+      1.4.2. Evaluaci贸n: Matriz de Confusi贸n y curvas ROC.
+    1.5 M谩quinas de Vectores de Soporte.
+    1.6 Equivalent Imputation Algorithm based on Equivalence Hypothesis Tests
 
