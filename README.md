@@ -1,19 +1,25 @@
-# Equivalent Imputation Models for Handling Missing Data in Compositional Geochemical Databases of Geothermal Fluids
+﻿# Equivalent Imputation Models for Handling Missing Data in Compositional Geochemical Databases of Geothermal Fluids
 
-This exercise corresponds to a paper where we are analyzing compositional geothermal fluid data from different geothermal boreholes/wells. The purpose is to impute missing data in the whole dataset so it can be used to multiple purposes such as predicting the bottom-hole temperature of a geothermal resource.
+The data and code corresponds to the paper with the same name as this repository, were we are analyzing compositional geothermal fluid data from different geothermal boreholes/wells. The purpose is to impute missing data in the whole dataset so it can be used for multiple purposes such as predicting the bottom-hole temperature of a geothermal resource.
 
-The content of the experimentation is as follows:
+The content of the repository is mainly:
 
-    1.1 Introducción a la Ciencia de Datos.
-    1.2 Intro al PP.
-      1.2.1. Exploración Visual de Datos.
-    1.3 Regresión Lineal Simple y Múltiple.
-      1.3.1.Pre-procesamiento: Normalización, Escalamiento, Transformación Logarítmica.
-      1.3.2. Sel. Variables: Correlación y Mapas de Calor.
-      1.3.3. Evaluación: Error Cuadrático Promedio, R^2.
-    1.4 Clasificación: Regresión Logística, K-Vecinos Cercanos, Árboles de Decisión.
-      1.4.1. Sel. Variables: Information Value.
-      1.4.2. Evaluación: Matriz de Confusión y curvas ROC.
-    1.5 Máquinas de Vectores de Soporte.
-    1.6 Equivalent Imputation Algorithm based on Equivalence Hypothesis Tests
+    1. Data (recollected and used for experimentation)
+    2. Notebooks (developed in Python and R)
+
+The content in the Data folder is the following: 
+
+    - WCGDb.csv (A comma-separated values file containing the Working Compositional Geothermal Database)
+    - simplifiedWCGDb.csv (a simplified version of the WCGDb)
+
+The content of the notebooks is the following:
+
+    - EquivImpGFD_2021.ipynb (the main notebook)
+    - ImputatorTester_alg_541a.ipynb (imputations using single imputation algorithms WITHOUT parameters tunning)
+    - ImputatorTester_alg_541b.ipynb (imputations using single imputation algorithms WITH parameters tunning)
+    - ImputatorTester_alg_521.ipynb (imputations using the MICE)
+    - ImputatorTester_alg_522.ipynb (imputations using the multiple imputation algorithms WITH parameters tunning)
+    - ImputationQualityAssessment.ipynb (imputations evaluation)
+    - ImputationQualityAssessment1.md (fancier notebook developed in R for showing imputations evaluation)
+
 
