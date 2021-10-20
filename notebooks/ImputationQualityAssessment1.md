@@ -1,94 +1,63 @@
----
-title: "Imputation evaluation for compositional geothermal fluid samples"
-author: 'G. Santamaria-Bonfil'
-output: 
-  #rmarkdown::github_document
-  html_document:
-    toc: true
-    toc_depth: 3
-    toc_float: true
-    number_sections: true
-    df_print: paged
-    # theme: journal
-    # highlight: textmate
-    keep_md: true
-    # css: journal.css
----
+Imputation evaluation for compositional geothermal fluid samples
+================
+G. Santamaria-Bonfil
 
 # Libraries
 
-
-```r
+``` r
 library(TOSTER)
 library(stringr)
 library(dplyr)
 ```
 
-```
-## 
-## Attaching package: 'dplyr'
-```
+    ## 
+    ## Attaching package: 'dplyr'
 
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
 
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
-```r
+``` r
 library(reshape)
 ```
 
-```
-## 
-## Attaching package: 'reshape'
-```
+    ## 
+    ## Attaching package: 'reshape'
 
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     rename
-```
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     rename
 
-```r
+``` r
 library(ggplot2)
 library(ggridges)
 library(viridis)
 ```
 
-```
-## Loading required package: viridisLite
-```
+    ## Loading required package: viridisLite
 
-```r
+``` r
 library(scales)
 ```
 
-```
-## 
-## Attaching package: 'scales'
-```
+    ## 
+    ## Attaching package: 'scales'
 
-```
-## The following object is masked from 'package:viridis':
-## 
-##     viridis_pal
-```
+    ## The following object is masked from 'package:viridis':
+    ## 
+    ##     viridis_pal
 
-```r
+``` r
 library(latex2exp)
 ```
 
 # Function to transform from PPM to Milliequivalents
 
-
-```r
+``` r
 raw.2.mlEquivalent <- function(tmp_df)
 {
   res_df <- tmp_df
@@ -108,23 +77,21 @@ raw.2.mlEquivalent <- function(tmp_df)
 
 # Transform from PPM to MilliEquivalents
 
-The original and imputed WCGDb must be in the working directory.
-But first, we require to locate the original and the imputed datasets.
-For illustration purposes, the working directory is set to
+The original and imputed WCGDb must be in the working directory. But
+first, we require to locate the original and the imputed datasets. For
+illustration purposes, the working directory is set to
 
-"C:/Users/guillermo.santamaria/Documents/Results"
+“C:/Users/guillermo.santamaria/Documents/Results”
 
 Modify this path to your convenience.
 
-
-```r
+``` r
 knitr::opts_knit$set(root.dir = 'C:/Users/guillermo.santamaria/Documents/Results')
 ```
 
 ## Original Data
 
-
-```r
+``` r
 orig_csv_name = 'original/simplifiedWCGDb.csv'
 original.data <- read.csv(orig_csv_name, header = T, stringsAsFactors = F)
 
@@ -139,8 +106,7 @@ original.data <- raw.2.mlEquivalent(original.data)
 
 ## Imputed Data
 
-
-```r
+``` r
 imp_path<- paste0(getwd(),'/GFD Imputed DB/')
 
 files_ls <- list.files(imp_path)
@@ -158,17 +124,14 @@ for(i in 1:length(files_ls))
 
 ### Renaming imputed datasets by the name of the algorithm
 
-
-```r
+``` r
 imp_file_names <- strsplit(files_ls, '_')
 imp_names <- sapply(1:length(imp_file_names), 
                     function(i) imp_file_names[[i]][2])
 names(imp_dfs) <- imp_names
 ```
 
-
-
-```r
+``` r
 na_col_ixes <- sapply(1:dim(original.data)[2], 
                       function(i) any(is.na(original.data[,i])))
 
@@ -205,9 +168,7 @@ EqvlntImp.df$p.tost     <- 0.99
 EqvlntImp.df$has.eqvlnc <- F
 ```
 
-
-
-```r
+``` r
 for(j in 1:dim(EqvlntImp.df)[1])
 {
   tmp_df  <- imp_dfs[[EqvlntImp.df$algorithm[j]]]
@@ -284,124 +245,82 @@ for(j in 1:dim(EqvlntImp.df)[1])
 
 ## Minimun Equivalence Interval
 
+    ## # A tibble: 66 x 7
+    ## # Groups:   imputed.var [6]
+    ##    algorithm imputed.var algorithm.parsed min.Eq.val p.ttest p.tost has.eqvlnc
+    ##    <chr>     <chr>       <fct>                 <dbl>   <dbl>  <dbl> <lgl>     
+    ##  1 dt514b    Li          DT^*                  0.275  0.0741 0.0468 TRUE      
+    ##  2 knn       Li          KNN^-                 0.275  0.0807 0.0400 TRUE      
+    ##  3 mice      Li          MICE^-                0.150  0.839  0.0327 TRUE      
+    ##  4 svrr514b  Li          SVR_r^*               0.225  0.270  0.0292 TRUE      
+    ##  5 svrr522   Li          miSVR_r^*             0.150  0.644  0.0494 TRUE      
+    ##  6 dt514a    Mg          DT^-                  0.125  0.597  0.0436 TRUE      
+    ##  7 dt514b    Mg          DT^*                  0.125  0.561  0.0477 TRUE      
+    ##  8 dt522     Mg          miDT^*                0.150  0.517  0.0208 TRUE      
+    ##  9 knn       Mg          KNN^-                 0.150  0.529  0.0199 TRUE      
+    ## 10 mean      Mg          mu                    0.150  0.503  0.0219 TRUE      
+    ## # ... with 56 more rows
 
-```
-## # A tibble: 66 x 7
-## # Groups:   imputed.var [6]
-##    algorithm imputed.var algorithm.parsed min.Eq.val p.ttest p.tost has.eqvlnc
-##    <chr>     <chr>       <fct>                 <dbl>   <dbl>  <dbl> <lgl>     
-##  1 dt514b    Li          DT^*                  0.275  0.0741 0.0468 TRUE      
-##  2 knn       Li          KNN^-                 0.275  0.0807 0.0400 TRUE      
-##  3 mice      Li          MICE^-                0.150  0.839  0.0327 TRUE      
-##  4 svrr514b  Li          SVR_r^*               0.225  0.270  0.0292 TRUE      
-##  5 svrr522   Li          miSVR_r^*             0.150  0.644  0.0494 TRUE      
-##  6 dt514a    Mg          DT^-                  0.125  0.597  0.0436 TRUE      
-##  7 dt514b    Mg          DT^*                  0.125  0.561  0.0477 TRUE      
-##  8 dt522     Mg          miDT^*                0.150  0.517  0.0208 TRUE      
-##  9 knn       Mg          KNN^-                 0.150  0.529  0.0199 TRUE      
-## 10 mean      Mg          mu                    0.150  0.503  0.0219 TRUE      
-## # ... with 56 more rows
-```
-
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ### Ridgeline plots of original vs Imputed dataset
-In order to appreciate the imputation quality carried out by the different 
-imputation algorithms, the density distribution function of the original WCGDb 
-against the datasets obtained by the imputation algorithms is shown.
 
+In order to appreciate the imputation quality carried out by the
+different imputation algorithms, the density distribution function of
+the original WCGDb against the datasets obtained by the imputation
+algorithms is shown.
 
-```
-## Using  as id variables
-```
+    ## Using  as id variables
 
-```
-## Picking joint bandwidth of 0.259
-```
+    ## Picking joint bandwidth of 0.259
 
-```
-## Warning: Removed 452 rows containing non-finite values (stat_density_ridges).
-```
+    ## Warning: Removed 452 rows containing non-finite values (stat_density_ridges).
 
-```
-## Using  as id variables
-```
+    ## Using  as id variables
 
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-```
-## Picking joint bandwidth of 0.59
-```
+    ## Picking joint bandwidth of 0.59
 
-```
-## Warning: Removed 114 rows containing non-finite values (stat_density_ridges).
-```
+    ## Warning: Removed 114 rows containing non-finite values (stat_density_ridges).
 
-```
-## Using  as id variables
-```
+    ## Using  as id variables
 
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-9-2.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
 
-```
-## Picking joint bandwidth of 0.684
-```
+    ## Picking joint bandwidth of 0.684
 
-```
-## Warning: Removed 44 rows containing non-finite values (stat_density_ridges).
-```
+    ## Warning: Removed 44 rows containing non-finite values (stat_density_ridges).
 
-```
-## Using  as id variables
-```
+    ## Using  as id variables
 
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-9-3.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-9-3.png)<!-- -->
 
-```
-## Picking joint bandwidth of 0.484
-```
+    ## Picking joint bandwidth of 0.484
 
-```
-## Warning: Removed 157 rows containing non-finite values (stat_density_ridges).
-```
+    ## Warning: Removed 157 rows containing non-finite values (stat_density_ridges).
 
-```
-## Using  as id variables
-```
+    ## Using  as id variables
 
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-9-4.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-9-4.png)<!-- -->
 
-```
-## Picking joint bandwidth of 0.255
-```
+    ## Picking joint bandwidth of 0.255
 
-```
-## Warning: Removed 191 rows containing non-finite values (stat_density_ridges).
-```
+    ## Warning: Removed 191 rows containing non-finite values (stat_density_ridges).
 
-```
-## Using  as id variables
-```
+    ## Using  as id variables
 
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-9-5.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-9-5.png)<!-- -->
 
-```
-## Picking joint bandwidth of 0.375
-```
+    ## Picking joint bandwidth of 0.375
 
-```
-## Warning: Removed 412 rows containing non-finite values (stat_density_ridges).
-```
+    ## Warning: Removed 412 rows containing non-finite values (stat_density_ridges).
 
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-9-6.png)<!-- -->
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-9-6.png)<!-- -->
 
 # Charge Balance Error Analysis
 
+    ## Using  as id variables
+    ## Using  as id variables
 
-```
-## Using  as id variables
-## Using  as id variables
-```
-
-![](ImputationQualityAssessment1_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
-
+![](ImputationQualityAssessment1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
